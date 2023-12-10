@@ -1,10 +1,19 @@
 import React from "react";
 import { Typography, TextField, Button } from "@mui/material";
+
 import "./Register.css";
 
+import {useNavigate} from 'react-router-dom'
+
 const Register = () => {
-  function signUpHandler() {
+  const moveTo = useNavigate();
+
+  function registerHandler() {
     console.log("Register");
+  }
+  function moveToLoginPage(){
+    moveTo("/login")
+    console.log("Moved to login")
   }
 
   return (
@@ -17,7 +26,7 @@ const Register = () => {
         <Typography variant="body1" id="register-page-login-desc">
           Login now and seamlessly explore our services!
         </Typography>
-        <Button variant="contained" id="login-redirect-btn">
+        <Button variant="contained" id="login-redirect-btn" onClick={moveToLoginPage}>
           Login
         </Button>
       </div>
@@ -58,7 +67,7 @@ const Register = () => {
             type="password"
             margin="normal"
           />
-          <Button variant="contained" id="register-btn" onClick={signUpHandler}>
+          <Button variant="contained" id="register-btn" onClick={registerHandler}>
             Register
           </Button>
         </form>

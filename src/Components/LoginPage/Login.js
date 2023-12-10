@@ -3,9 +3,17 @@ import { Typography, TextField, Button } from "@mui/material";
 
 import "./Login.css";
 
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
-  function signUpHandler() {
-    console.lof("Reg");
+  const moveTo = useNavigate();
+
+  function loginHandler() {
+    console.log("login");
+  }
+  function moveToRegisterPage() {
+    moveTo("/register");
+    console.log("Move to register page.");
   }
   return (
     <div className="login-page">
@@ -31,7 +39,7 @@ const Login = () => {
             type="password"
             margin="normal"
           />
-          <Button variant="contained" id="login-btn">
+          <Button variant="contained" id="login-btn" onClick={loginHandler}>
             Login
           </Button>
         </form>
@@ -46,7 +54,7 @@ const Login = () => {
           Sign up and befriend yourself with immense ocean of opportunities.
         </Typography>
         <Button
-          onClick={signUpHandler}
+          onClick={moveToRegisterPage}
           variant="contained"
           id="reg-redirect-btn"
         >
