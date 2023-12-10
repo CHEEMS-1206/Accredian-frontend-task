@@ -7,10 +7,50 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const moveTo = useNavigate();
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
-  function loginHandler() {
-    console.log("login");
-  }
+  const loginHandler = async (e) => {
+    e.preventDefault();
+    // Validate password (password: 8 characters)
+    const isPasswordValid = password.length === 8;
+    if (!isPasswordValid) {
+      alert("Password must be 8 characters.");
+      return;
+    }
+
+    const formData = {
+      username,
+      password,
+    };
+
+    try {
+      const response = await fetch("http://localhost:5001/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const { token } = await response.json();
+        alert("Logged in successfully! Token:");
+
+        // Save the token and user details in local storage for further use
+        localStorage.setItem("token", token);
+        localStorage.setItem("username", username);
+        moveTo("/homepage");
+      } else {
+        alert("Failed to log in.");
+        // Handle other status codes or errors
+      }
+    } catch (error) {
+      alert("Error:", error);
+      // Handle network errors or exceptions
+    }
+  };
+
   function moveToRegisterPage() {
     moveTo("/register");
     console.log("Move to register page.");
@@ -30,12 +70,20 @@ const Login = () => {
             id="username"
             className="text-fields"
             label="Username"
+            value={username}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
             margin="normal"
           />
           <TextField
             className="text-fields"
             id="password"
             label="Password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
             type="password"
             margin="normal"
           />
