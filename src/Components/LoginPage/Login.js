@@ -25,6 +25,7 @@ const Login = () => {
     };
 
     try {
+      console.log(formData)
       const response = await fetch("http://localhost:5001/api/login", {
         method: "POST",
         headers: {
@@ -40,7 +41,7 @@ const Login = () => {
         // Save the token and user details in local storage for further use
         localStorage.setItem("token", token);
         localStorage.setItem("username", username);
-        moveTo("/homepage");
+        moveTo("/");
       } else {
         alert("Failed to log in.");
         // Handle other status codes or errors
